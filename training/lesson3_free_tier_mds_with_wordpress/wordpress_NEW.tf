@@ -1,5 +1,5 @@
-module "oci-arch-wordpress" {
-  source                    = "github.com/oracle-devrel/terraform-oci-arch-wordpress"
+module "oci-fk-wordpress" {
+  source                    = "github.com/mlinxfeld/terraform-oci-fk-wordpress"
   tenancy_ocid              = var.tenancy_ocid
   vcn_id                    = oci_core_vcn.FoggyKitchenVCN.id
   numberOfNodes             = 1
@@ -9,7 +9,6 @@ module "oci-arch-wordpress" {
   shape                     = var.wordpress_compute_shape
   flex_shape_ocpus          = var.wordpress_compute_flex_shape_ocpus
   flex_shape_memory         = var.wordpress_compute_flex_shape_memory
-  label_prefix              = "wpmds"
   ssh_authorized_keys       = tls_private_key.public_private_key_pair.public_key_openssh
   mds_ip                    = module.oci-fk-free-mds.mds_database.mds_ip_address
   wp_subnet_id              = oci_core_subnet.FoggyKitchenPublicSubnet.id
@@ -24,5 +23,6 @@ module "oci-arch-wordpress" {
   wp_site_admin_user        = var.wp_site_admin_user
   wp_site_admin_pass        = var.wp_site_admin_pass
   wp_site_admin_email       = var.wp_site_admin_email
-  display_name              = "FoggyKitchenWordpress"
+  label_prefix              = "FoggyKitchen"
+  display_name              = "WordPress"
 }
