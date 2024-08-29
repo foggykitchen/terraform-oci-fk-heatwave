@@ -26,8 +26,8 @@ module "oci-fk-x-region-mds-backup" {
   mds_compartment_ocid                   = var.mds_compartment_ocid
   mds_cross_region_backup_region         = var.region
   mds_cross_region_manual_backup_ocid    = module.oci-fk-mds.mds_backup.mds_backup_id
-  mds_backup_description                 = "FoggyKitchen MDS Cross-Region Copy of Manual Backup"
-  mds_backup_display_name                = "FoggyKitchenMDSXRegionBackup" 
+  mds_cross_region_backup_description    = "FoggyKitchen MDS Cross-Region Copy of Manual Backup"
+  mds_cross_region_backup_display_name   = "FoggyKitchenMDSXRegionBackup" 
 }
 
 module "oci-fk-mds-clone-from-x-region-backup" { 
