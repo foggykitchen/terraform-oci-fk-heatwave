@@ -1,9 +1,9 @@
-data "oci_identity_availability_domains" "ADs" {  
+data "oci_identity_availability_domains" "ADs" {
   compartment_id = var.tenancy_ocid
 }
 
 data "oci_identity_availability_domains" "ADs2" {
-  provider       = oci.region2  
+  provider       = oci.region2
   compartment_id = var.tenancy_ocid
 }
 
@@ -21,7 +21,7 @@ data "oci_core_images" "OSImage" {
 }
 
 data "oci_core_images" "OSImage2" {
-  provider                 = oci.region2  
+  provider                 = oci.region2
   compartment_id           = var.mds_compartment_ocid
   operating_system         = var.instance_os
   operating_system_version = var.linux_os_version

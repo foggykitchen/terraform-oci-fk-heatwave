@@ -1,7 +1,7 @@
 resource "oci_core_vcn" "FoggyKitchenVCN" {
   cidr_block     = var.mds_vcn_cidr_block
   dns_label      = var.mds_vcn_dns_label
-  compartment_id = var.mds_compartment_ocid 
+  compartment_id = var.mds_compartment_ocid
   display_name   = var.mds_vcn_display_name
 }
 
@@ -32,7 +32,7 @@ resource "oci_core_route_table" "FoggyKitchenPublicRouteTable" {
       network_entity_id = oci_core_drg.FoggyKitchenDRG1[0].id
       destination       = var.mds_vcn_cidr_block2
       destination_type  = "CIDR_BLOCK"
-    }    
+    }
   }
 }
 
@@ -122,7 +122,7 @@ resource "oci_core_route_table" "FoggyKitchenPrivateRouteTable" {
       network_entity_id = oci_core_drg.FoggyKitchenDRG1[0].id
       destination       = var.mds_vcn_cidr_block2
       destination_type  = "CIDR_BLOCK"
-    }    
+    }
   }
 }
 

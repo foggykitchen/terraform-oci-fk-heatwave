@@ -43,14 +43,14 @@ variable "mds_data_storage_size_in_gb" {
 }
 variable "mds_defined_tags" {
   default = {}
-  
+
 }
 variable "mds_description" {
   default = "FoggyKitchen MDS/Heatwave instance"
 }
 variable "mds_display_name" {
   default = "FoggyKitchen MDS/Heatwave"
-  
+
 }
 variable "mds_fault_domain" {
   default = ""
@@ -76,10 +76,10 @@ variable "mds_port_x" {
 }
 
 variable "mds_vcn_cidr_block" {
-  default = "10.0.0.0/16"  
+  default = "10.0.0.0/16"
 }
 variable "mds_vcn_dns_label" {
-  default = "mdsvcn" 
+  default = "mdsvcn"
 }
 
 variable "mds_vcn_display_name" {
@@ -87,7 +87,7 @@ variable "mds_vcn_display_name" {
 }
 
 variable "mds_subnet_cidr_block" {
-  default = "10.0.1.0/24" 
+  default = "10.0.1.0/24"
 }
 
 variable "mds_subnet_display_name" {
@@ -107,7 +107,7 @@ variable "mds_backup_description" {
 }
 
 variable "mds_backup_display_name" {
-  default = "FoggyKitchenMDSManualBackup" 
+  default = "FoggyKitchenMDSManualBackup"
 }
 
 variable "mds_backup_retention_in_days" {
@@ -131,7 +131,7 @@ variable "mds_cross_region_backup_description" {
 }
 
 variable "mds_cross_region_backup_display_name" {
-  default = "FoggyKitchenMDSCrossRegionBackup" 
+  default = "FoggyKitchenMDSCrossRegionBackup"
 }
 
 variable "mds_defined_source_enabled" {
@@ -155,7 +155,7 @@ variable "mds_defined_source_db_system_recovery_point" {
 }
 
 variable "mds_defined_source_par_url" {
-  default = "" 
+  default = ""
 }
 
 variable "mds_custom_configuration_enabled" {
@@ -194,7 +194,7 @@ variable "mds_channel_source_mysql_database_source_type" {
 }
 
 variable "mds_channel_source_mysql_database_ssl_mode" {
-  default = "REQUIRED" 
+  default = "REQUIRED"
 }
 
 variable "mds_channel_source_mysql_database_replication_user_password" {
@@ -270,7 +270,7 @@ variable "mds_replica_overrides_configuration_id" {
 }
 
 variable "replica_replica_overrides_mysql_version" {
-  default = ""  
+  default = ""
 }
 
 variable "mds_replica_overrides_shape" {

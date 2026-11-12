@@ -5,7 +5,7 @@ module "oci-fk-mds-source" {
   providers = {
     oci = oci.region1
   }
-  source                                = "git::https://github.com/mlinxfeld/terraform-oci-fk-heatwave.git?ref=e5809bbebad17dba8d3c5185b24123e16305b7ac"
+  source                                = "../.."
   mds_admin_password                    = var.mds_admin_password
   mds_availability_domain               = var.mds_availability_domain
   mds_compartment_ocid                  = var.mds_compartment_ocid
@@ -26,7 +26,7 @@ module "oci-fk-x-region-mds-backup" {
   providers = {
     oci = oci.region2
   }
-  source                                 = "git::https://github.com/mlinxfeld/terraform-oci-fk-heatwave.git?ref=e5809bbebad17dba8d3c5185b24123e16305b7ac"
+  source                                 = "../.."
   mds_cross_region_manual_backup_enabled = true
   mds_manual_backup_enabled              = false
   mds_compartment_ocid                   = var.mds_compartment_ocid
@@ -44,7 +44,7 @@ module "oci-fk-mds-target-clone-from-x-region-backup" {
   providers = {
     oci = oci.region2
   }
-  source                         = "git::https://github.com/mlinxfeld/terraform-oci-fk-heatwave.git?ref=e5809bbebad17dba8d3c5185b24123e16305b7ac"
+  source                         = "../.."
   mds_defined_source_enabled     = true
   mds_defined_source_type        = "BACKUP"
   mds_defined_source_backup_ocid = module.oci-fk-x-region-mds-backup[0].mds_backup.mds_cross_region_backup_id
@@ -62,7 +62,7 @@ module "oci-fk-mds-target-clone-from-x-region-backup" {
 
 module "oci-fk-mds-repl-user-setup" {
   count  = var.mds_channel_repl_user_setup_enabled ? 1 : 0
-  source = "git::https://github.com/mlinxfeld/terraform-oci-fk-heatwave.git?ref=e5809bbebad17dba8d3c5185b24123e16305b7ac"
+  source = "../.."
   providers = {
     oci = oci.region1
   }
@@ -83,7 +83,7 @@ module "oci-fk-mds-repl-user-setup" {
 
 module "oci-fk-mds-channel-source-to-target-clone" {
   count  = var.mds_channel_enabled ? 1 : 0
-  source = "git::https://github.com/mlinxfeld/terraform-oci-fk-heatwave.git?ref=e5809bbebad17dba8d3c5185b24123e16305b7ac"
+  source = "../.."
   providers = {
     oci = oci.region2
   }

@@ -13,10 +13,10 @@ variable "mds_admin_username" {
 }
 
 variable "mds_vcn_cidr_block" {
-  default = "10.0.0.0/16"  
+  default = "10.0.0.0/16"
 }
 variable "mds_vcn_dns_label" {
-  default = "wpmds" 
+  default = "wpmds"
 }
 
 variable "mds_vcn_display_name" {
@@ -24,7 +24,7 @@ variable "mds_vcn_display_name" {
 }
 
 variable "mds_private_subnet_cidr_block" {
-  default = "10.0.2.0/24" 
+  default = "10.0.2.0/24"
 }
 
 variable "mds_private_subnet_display_name" {
@@ -32,7 +32,7 @@ variable "mds_private_subnet_display_name" {
 }
 
 variable "mds_public_subnet_cidr_block" {
-  default = "10.0.1.0/24" 
+  default = "10.0.1.0/24"
 }
 
 variable "mds_public_subnet_display_name" {
@@ -75,7 +75,7 @@ variable "wp_schema" {
 }
 
 variable "wp_auto_update" {
-  default     = true
+  default = true
 }
 
 variable "wp_plugins" {

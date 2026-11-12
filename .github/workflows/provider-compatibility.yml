@@ -1,0 +1,26 @@
+name: OCI 9 compatibility
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        root: [".", "training/lesson1_free_tier_mds", "training/lesson2_free_tier_mds_with_public_access", "training/lesson3_free_tier_mds_with_heatwave_cluster", "training/lesson4_free_tier_mds_with_wordpress", "training/lesson5_mds_manual_backups_with_wordpress", "training/lesson6_mds_channel_with_wordpress", "training/lesson7_ha_mds_with_ha_wordpress", "training/lesson8_mds_with_replicas"]
+    env:
+      TF_IN_AUTOMATION: "1"
+      TF_INPUT: "0"
+      OCI9_ALLOW_UNRELEASED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: 1.11.6
+          tofu_wrapper: false
+      - name: Format, initialize, validate and mocked plan
+        run: python3 scripts/oci9_check.py --root '${{ matrix.root }}'

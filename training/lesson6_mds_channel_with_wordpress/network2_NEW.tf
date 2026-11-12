@@ -2,7 +2,7 @@ resource "oci_core_vcn" "FoggyKitchenVCN2" {
   provider       = oci.region2
   cidr_block     = var.mds_vcn_cidr_block2
   dns_label      = var.mds_vcn_dns_label
-  compartment_id = var.mds_compartment_ocid 
+  compartment_id = var.mds_compartment_ocid
   display_name   = var.mds_vcn_display_name
 }
 
@@ -14,7 +14,7 @@ resource "oci_core_internet_gateway" "FoggyKitchenInternetGateway2" {
 }
 
 resource "oci_core_nat_gateway" "FoggyKitchenNATGateway2" {
-  provider       = oci.region2  
+  provider       = oci.region2
   compartment_id = var.mds_compartment_ocid
   vcn_id         = oci_core_vcn.FoggyKitchenVCN2.id
   display_name   = "FoggyKitchenNATGateway2"
@@ -36,7 +36,7 @@ resource "oci_core_route_table" "FoggyKitchenPublicRouteTable2" {
       network_entity_id = oci_core_drg.FoggyKitchenDRG2[0].id
       destination       = var.mds_vcn_cidr_block
       destination_type  = "CIDR_BLOCK"
-    }    
+    }
   }
 }
 
@@ -129,7 +129,7 @@ resource "oci_core_route_table" "FoggyKitchenPrivateRouteTable2" {
       network_entity_id = oci_core_drg.FoggyKitchenDRG2[0].id
       destination       = var.mds_vcn_cidr_block
       destination_type  = "CIDR_BLOCK"
-    }    
+    }
   }
 }
 
@@ -145,13 +145,13 @@ resource "oci_core_subnet" "FoggyKitchenPublicSubnet2" {
 
 
 resource "oci_core_route_table_attachment" "FoggyKitchenPublicSubnetRouteTableAttachment2" {
-  provider       = oci.region2  
+  provider       = oci.region2
   subnet_id      = oci_core_subnet.FoggyKitchenPublicSubnet2.id
   route_table_id = oci_core_route_table.FoggyKitchenPublicRouteTable2.id
 }
 
 resource "oci_core_subnet" "FoggyKitchenPrivateSubnet2" {
-  provider                   = oci.region2  
+  provider                   = oci.region2
   cidr_block                 = var.mds_private_subnet_cidr_block2
   compartment_id             = var.mds_compartment_ocid
   vcn_id                     = oci_core_vcn.FoggyKitchenVCN2.id
@@ -162,7 +162,7 @@ resource "oci_core_subnet" "FoggyKitchenPrivateSubnet2" {
 }
 
 resource "oci_core_route_table_attachment" "FoggyKitchenPrivateSubnetRouteTableAttachment2" {
-  provider       = oci.region2  
+  provider       = oci.region2
   subnet_id      = oci_core_subnet.FoggyKitchenPrivateSubnet2.id
   route_table_id = oci_core_route_table.FoggyKitchenPrivateRouteTable2.id
 }
