@@ -1,5 +1,5 @@
 module "oci-fk-wordpress" {
-  source                    = "github.com/mlinxfeld/terraform-oci-fk-wordpress"
+  source                    = "git::https://github.com/mlinxfeld/terraform-oci-fk-wordpress.git?ref=99f4e2b0664152891bb80ac085dbbb0e2c449150"
   tenancy_ocid              = var.tenancy_ocid
   vcn_id                    = oci_core_vcn.FoggyKitchenVCN.id
   numberOfNodes             = 2
@@ -13,28 +13,28 @@ module "oci-fk-wordpress" {
   display_name              = "WordPress"
   mds_ip                    = module.oci-fk-mds.mds_database.mds_ip_address
   wp_subnet_id              = oci_core_subnet.FoggyKitchenPrivateSubnet.id
-  lb_subnet_id              = oci_core_subnet.FoggyKitchenPublicSubnet.id 
-  bastion_subnet_id         = oci_core_subnet.FoggyKitchenPublicSubnet.id 
-  fss_subnet_id             = oci_core_subnet.FoggyKitchenPrivateSubnet.id 
+  lb_subnet_id              = oci_core_subnet.FoggyKitchenPublicSubnet.id
+  bastion_subnet_id         = oci_core_subnet.FoggyKitchenPublicSubnet.id
+  fss_subnet_id             = oci_core_subnet.FoggyKitchenPrivateSubnet.id
   admin_username            = var.mds_admin_username
   admin_password            = var.mds_admin_password
   wp_version                = var.wp_version
   wp_schema                 = var.wp_schema
   wp_name                   = var.wp_name
   wp_password               = var.mds_wp_password
-  wp_plugins                = tolist(split(",",var.wp_plugins))
-  wp_themes                 = tolist(split(",",var.wp_themes))
+  wp_plugins                = tolist(split(",", var.wp_plugins))
+  wp_themes                 = tolist(split(",", var.wp_themes))
   wp_site_title             = var.wp_site_title
   wp_site_admin_user        = var.wp_site_admin_user
   wp_site_admin_pass        = var.wp_site_admin_pass
   wp_site_admin_email       = var.wp_site_admin_email
-  lb_shape                  = var.lb_shape 
-  flex_lb_min_shape         = var.flex_lb_min_shape 
+  lb_shape                  = var.lb_shape
+  flex_lb_min_shape         = var.flex_lb_min_shape
   flex_lb_max_shape         = var.flex_lb_max_shape
   use_bastion_service       = false
   bastion_image_id          = lookup(data.oci_core_images.OSImage.images[0], "id")
   bastion_shape             = var.bastion_shape
   bastion_flex_shape_ocpus  = var.bastion_flex_shape_ocpus
   bastion_flex_shape_memory = var.bastion_flex_shape_memory
-  bastion_service_region    = var.region 
+  bastion_service_region    = var.region
 }

@@ -1,7 +1,7 @@
 resource "oci_core_vcn" "FoggyKitchenVCN" {
   cidr_block     = var.mds_vcn_cidr_block
   dns_label      = var.mds_vcn_dns_label
-  compartment_id = var.mds_compartment_ocid 
+  compartment_id = var.mds_compartment_ocid
   display_name   = var.mds_vcn_display_name
 }
 
@@ -98,7 +98,7 @@ resource "oci_core_security_list" "FoggyKitchenMDSSecurityList" {
     protocol = 6
     source   = var.mds_vcn_cidr_block
   }
-  
+
   ingress_security_rules {
     tcp_options {
       max = 80

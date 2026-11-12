@@ -1,7 +1,7 @@
 output "mds_database" {
   value = {
     mds_id               = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : oci_mysql_mysql_db_system.FoggyKitchenMDS[0].id
-    mds_configuration_id = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : oci_mysql_mysql_db_system.FoggyKitchenMDS[0].configuration_id  
+    mds_configuration_id = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : oci_mysql_mysql_db_system.FoggyKitchenMDS[0].configuration_id
     mds_ip_address       = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : oci_mysql_mysql_db_system.FoggyKitchenMDS[0].endpoints[0].ip_address
     mds_port             = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : oci_mysql_mysql_db_system.FoggyKitchenMDS[0].endpoints[0].port
     mds_port_x           = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : oci_mysql_mysql_db_system.FoggyKitchenMDS[0].endpoints[0].port_x
@@ -11,14 +11,14 @@ output "mds_database" {
 }
 
 output "mds_backup" {
-   value = {
-     mds_backup_id = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : var.mds_manual_backup_enabled ? oci_mysql_mysql_backup.FoggyKitchenMDSManualBackup[0].id : ""
-     mds_cross_region_backup_id = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? oci_mysql_mysql_backup.FoggyKitchenMDSCrossRegionBackup[0].id : ""
-   }
+  value = {
+    mds_backup_id              = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : var.mds_manual_backup_enabled ? oci_mysql_mysql_backup.FoggyKitchenMDSManualBackup[0].id : ""
+    mds_cross_region_backup_id = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? oci_mysql_mysql_backup.FoggyKitchenMDSCrossRegionBackup[0].id : ""
+  }
 }
 
 output "mds_channel" {
-   value = {
-      mds_channel_id = var.mds_channel_enabled && !(var.mds_channel_repl_user_setup_enabled) ? oci_mysql_channel.FoggyKitchenMDSChannel[0].id : ""
-   }
+  value = {
+    mds_channel_id = var.mds_channel_enabled && !(var.mds_channel_repl_user_setup_enabled) ? oci_mysql_channel.FoggyKitchenMDSChannel[0].id : ""
+  }
 }

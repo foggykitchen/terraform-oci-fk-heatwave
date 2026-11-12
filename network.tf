@@ -2,7 +2,7 @@ resource "oci_core_vcn" "FoggyKitchenVCN" {
   count          = !var.use_existing_vcn ? 1 : 0
   cidr_block     = var.mds_vcn_cidr_block
   dns_label      = var.mds_vcn_dns_label
-  compartment_id = var.mds_compartment_ocid 
+  compartment_id = var.mds_compartment_ocid
   display_name   = var.mds_vcn_display_name
 }
 
