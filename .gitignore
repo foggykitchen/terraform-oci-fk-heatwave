@@ -1,8 +1,15 @@
-# Terraform
-.terraform
-.terraform.lock
+# Terraform / OpenTofu working files and credentials
+**/.terraform/*
 .terraform.lock.hcl
-terraform.tfvars
-terraform.tfstate
-terrafrom.tfstate.backup
-
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+crash.log
+crash.*.log
+*.pem
+*.key
+.local/
+.DS_Store

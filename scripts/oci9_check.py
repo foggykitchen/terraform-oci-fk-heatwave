@@ -13,7 +13,7 @@ def run(command,cwd=None):
     subprocess.run(command,cwd=cwd,check=True)
 
 def ignore(folder,names):
-    return [n for n in names if n in ('.git','.terraform','terraform.tfvars','terraform.tfvars.json','.terraform.lock.hcl') or '.tfstate' in n or n.endswith(('.tfplan','.pem','.key','.auto.tfvars','.auto.tfvars.json'))]
+    return [n for n in names if n in ('.git','.local','.terraform','terraform.tfvars','terraform.tfvars.json','.terraform.lock.hcl') or '.tfstate' in n or n.endswith(('.tfplan','.pem','.key','.auto.tfvars','.auto.tfvars.json'))]
 
 with tempfile.TemporaryDirectory(prefix='oci9-plan-') as temp:
     work=pathlib.Path(temp)/repo.name

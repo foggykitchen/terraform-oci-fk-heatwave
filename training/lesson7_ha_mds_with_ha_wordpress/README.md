@@ -1,4 +1,9 @@
 
+
+> **Current checkout:** use OpenTofu >= 1.11.0 and OCI provider >= 9.12.1, < 10.0.0.
+> Start with the [training guide](../README.md) for setup, validation and the course link.
+> Console transcripts below are historical course recordings; versions and generated values may differ.
+> Use the CLI workflow for this checkout. The Resource Manager instructions below describe historical release ZIPs, not a validated deployment path for the current version.
 # FoggyKitchen OCI MySQL Heatwave with Terraform 
 
 ## LESSON 7 - Creating Highly Available MySQL Database Service with Highly Available WordPress CMS
@@ -9,7 +14,7 @@ In this lesson, we'll delve into the creation of a **Highly Available MySQL Data
 
 ## Deploy Using Oracle Resource Manager
 
-1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/mlinxfeld/terraform-oci-fk-heatwave/releases/latest/download/terraform-oci-fk-heatwave-lesson7.zip)
+1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/foggykitchen/terraform-oci-fk-heatwave/releases/latest/download/terraform-oci-fk-heatwave-lesson7.zip)
 
     If you aren't already signed in, when prompted, enter the tenancy and user credentials.
 
@@ -35,7 +40,7 @@ Now, you'll want a local copy of this repo. You can make that with the commands:
 Clone the repo from github by executing the command as follows and then go to proper subdirectory:
 
 ```
-mlinxfeld@Martins-MacBook-Pro github % git clone https://github.com/mlinxfeld/terraform-oci-fk-heatwave.git
+mlinxfeld@Martins-MacBook-Pro github % git clone https://github.com/foggykitchen/terraform-oci-fk-heatwave.git
 
 mlinxfeld@Martins-MacBook-Pro github % cd terraform-oci-fk-heatwave
 

@@ -61,3 +61,114 @@ variables {
 run "oci9_plan" {
   command = plan
 }
+
+run "existing_subnet" {
+  command = plan
+  variables {
+    use_existing_vcn = true
+  }
+  assert {
+    condition     = length(oci_core_vcn.FoggyKitchenVCN) == 0 && oci_mysql_mysql_db_system.FoggyKitchenMDS[0].subnet_id == var.subnet_id
+    error_message = "Existing-subnet mode must reuse the supplied subnet without creating a VCN."
+  }
+}
+
+run "public_network" {
+  command = plan
+  variables {
+    use_public_subnet = true
+    subnet_id         = ""
+  }
+  assert {
+    condition     = length(oci_core_subnet.FoggyKitchenPublicSubnet) == 1 && length(oci_core_subnet.FoggyKitchenPrivateSubnet) == 0 && length(oci_core_nat_gateway.FoggyKitchenNATGateway) == 0
+    error_message = "Public-network mode must select the public subnet rather than create private networking."
+  }
+}
+
+run "heatwave" {
+  command = plan
+  variables {
+    heatwave_cluster_enabled = true
+  }
+  assert {
+    condition     = length(oci_mysql_heat_wave_cluster.FoggyKitchenHeatWave) == 1 && oci_mysql_mysql_db_system.FoggyKitchenMDS[0].data_storage_size_in_gb == 50
+    error_message = "Free Tier HeatWave mode must plan a cluster and retain the 50 GB database setting."
+  }
+}
+
+run "paid_database_backup" {
+  command = plan
+  variables {
+    mds_shape                        = "MySQL.2"
+    mds_manual_backup_enabled        = true
+    mds_custom_configuration_enabled = true
+    mds_backup_policy_is_enabled     = true
+  }
+  assert {
+    condition     = length(oci_mysql_mysql_backup.FoggyKitchenMDSManualBackup) == 1 && length(oci_mysql_mysql_configuration.FoggyKitchenMDSConfiguration) == 1
+    error_message = "Paid database mode must plan the requested backup and custom configuration."
+  }
+}
+
+run "backup_copy" {
+  command = plan
+  variables {
+    use_existing_vcn                       = true
+    mds_cross_region_manual_backup_enabled = true
+    mds_cross_region_manual_backup_ocid    = "MOCK_OCID_BACKUP"
+  }
+  assert {
+    condition     = length(oci_mysql_mysql_db_system.FoggyKitchenMDS) == 0 && length(oci_mysql_mysql_backup.FoggyKitchenMDSCrossRegionBackup) == 1 && output.mds_database.mds_id == ""
+    error_message = "Backup-copy mode must not create or expose a DB system."
+  }
+}
+
+run "restore_backup" {
+  command = plan
+  variables {
+    mds_shape                  = "MySQL.2"
+    mds_defined_source_enabled = true
+    mds_defined_source_type    = "BACKUP"
+  }
+  assert {
+    condition     = oci_mysql_mysql_db_system.FoggyKitchenMDS[0].source[0].backup_id == var.mds_defined_source_backup_ocid
+    error_message = "Backup restore must use the supplied backup ID."
+  }
+}
+
+run "channel" {
+  command = plan
+  variables {
+    use_existing_vcn    = true
+    mds_channel_enabled = true
+  }
+  assert {
+    condition     = length(oci_mysql_mysql_db_system.FoggyKitchenMDS) == 0 && length(oci_mysql_channel.FoggyKitchenMDSChannel) == 1 && output.mds_database.mds_id == ""
+    error_message = "Channel mode must create a channel targeting an existing database."
+  }
+}
+
+run "replication_user" {
+  command = plan
+  variables {
+    use_existing_vcn                    = true
+    mds_channel_repl_user_setup_enabled = true
+  }
+  assert {
+    condition     = length(null_resource.mysqlsh_source_repl_user_setup_with_bastion) == 1 && length(oci_mysql_mysql_db_system.FoggyKitchenMDS) == 0 && output.mds_database.mds_id == ""
+    error_message = "Replication-user mode must plan only its provisioner, without creating a DB system."
+  }
+}
+
+run "replica" {
+  command = plan
+  variables {
+    use_existing_vcn      = true
+    mds_replica_enabled   = true
+    mds_replica_overrides = true
+  }
+  assert {
+    condition     = length(oci_mysql_mysql_db_system.FoggyKitchenMDS) == 0 && length(oci_mysql_replica.FoggyKitchenMDSReplica) == 1 && output.mds_database.mds_id == ""
+    error_message = "Replica mode must create a replica of the supplied source rather than a DB system."
+  }
+}

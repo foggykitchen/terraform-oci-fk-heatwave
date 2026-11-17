@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Align module and training documentation with the FoggyKitchen repository standard; add the shared support policy and retain all eight course lessons.
+- Document module modes, networking behavior, current limitations and validation steps.
+- Add input types and descriptions, sensitive metadata for secrets, and output descriptions without renaming inputs, outputs or resource addresses.
+- Move provider requirements to versions.tf and declare the existing null provider dependency.
+- Correct the root tfvars example, lesson 5 link and HeatWave repository URLs.
+- Remove the tracked state backup from the source tree and ignore state, plans and local secret files. This does not remove the file from Git history.
+- Require published dependency references in normal CI and extend plan-only mode coverage.
+
 ## v2.0.0 — 2026-11-12
 
 - BREAKING: require OCI provider >= 9.12.1, < 10.0.0 and OpenTofu >= 1.11.0.

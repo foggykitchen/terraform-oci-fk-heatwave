@@ -1,6 +1,5 @@
-tenancy_ocid            = <tenancy_ocid>"
-region                  = "<region>"
-mds_availability_domain = "<ad_name>"
+# Root module inputs only. Configure OCI authentication and region in the caller
+# or use a complete provider configuration from training/lesson1_free_tier_mds.
+mds_availability_domain = "<availability_domain>"
 mds_compartment_ocid    = "<compartment_ocid>"
-mds_admin_password      = "<admin_password>"
-
+# Supply the password via TF_VAR_mds_admin_password or your secret workflow.

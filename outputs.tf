@@ -1,4 +1,5 @@
 output "mds_database" {
+  description = "DB system connection details; fields are empty in backup-copy, channel, replication-user and replica modes."
   value = {
     mds_id               = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : oci_mysql_mysql_db_system.FoggyKitchenMDS[0].id
     mds_configuration_id = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : oci_mysql_mysql_db_system.FoggyKitchenMDS[0].configuration_id
@@ -11,6 +12,7 @@ output "mds_database" {
 }
 
 output "mds_backup" {
+  description = "Local manual backup and cross-region backup copy IDs; inactive outputs are empty strings."
   value = {
     mds_backup_id              = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? "" : var.mds_manual_backup_enabled ? oci_mysql_mysql_backup.FoggyKitchenMDSManualBackup[0].id : ""
     mds_cross_region_backup_id = var.mds_channel_enabled || var.mds_channel_repl_user_setup_enabled || var.mds_replica_enabled ? "" : var.mds_cross_region_manual_backup_enabled ? oci_mysql_mysql_backup.FoggyKitchenMDSCrossRegionBackup[0].id : ""
@@ -18,6 +20,7 @@ output "mds_backup" {
 }
 
 output "mds_channel" {
+  description = "Replication channel ID when channel mode is enabled without replication-user setup."
   value = {
     mds_channel_id = var.mds_channel_enabled && !(var.mds_channel_repl_user_setup_enabled) ? oci_mysql_channel.FoggyKitchenMDSChannel[0].id : ""
   }

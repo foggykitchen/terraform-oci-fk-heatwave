@@ -1,43 +1,77 @@
-# FoggyKitchen MySQL HeatWave Database Service with Terraform 
+# OCI MySQL HeatWave Training
 
-## Course description
+These eight lessons accompany the [FoggyKitchen OCI MySQL HeatWave course](https://foggykitchen.com/courses/oci-mysql-heatwave-course/). They progress from a MySQL DB system to HeatWave acceleration, WordPress, backups, cross-region replication, high availability and read replicas.
 
-This comprehensive course focuses on deploying and managing MySQL HeatWave Database Service (MDS) instances on Oracle Cloud Infrastructure (OCI) using Terraform, an industry-standard infrastructure as code (IaC) tool. Each lesson provides in-depth, hands-on practice with Terraform, enabling participants to automate the creation and management of MySQL instances while leveraging OCI's Free Tier and advanced features. The lessons cover topics such as public access, HeatWave clusters, WordPress integration, backups, replication, and high availability.
+The [root module](../README.md) remains a reusable database component. Each lesson directory contains its own configuration, variable template, walkthrough, diagrams and mocked plan test. Keep the whole repository checkout: lesson module calls use `source = "../.."`.
 
-By the end of the course, participants will have the skills to deploy, manage, and scale MySQL HeatWave Database Service instances on OCI, ensuring optimal performance, reliability, and availability for a range of applications.
+## Lessons
 
-[Lesson 1: Creating Free Tier MySQL Database Service](lesson1_free_tier_mds) 
- 
-In this lesson, we'll delve into the creation of a **Free Tier MySQL Database Service** in Oracle Cloud Infrastructure using a **Terraform module**, focusing on automating the setup of a fully managed MySQL instance, giving you the foundational skills to efficiently manage your database while leveraging the free tier resources.
+| Lesson | Scenario |
+|---|---|
+| [1. Free Tier MySQL](lesson1_free_tier_mds) | DB system and module-managed networking |
+| [2. Public access through a bastion](lesson2_free_tier_mds_with_public_access) | Public bastion and private database subnet |
+| [3. HeatWave cluster](lesson3_free_tier_mds_with_heatwave_cluster) | MySQL with query acceleration |
+| [4. WordPress](lesson4_free_tier_mds_with_wordpress) | WordPress application backed by MySQL |
+| [5. Manual and cross-region backups](lesson5_mds_manual_backups_with_wordpress) | Create a backup, copy it to another region and restore a DB system |
+| [6. Replication channel](lesson6_mds_channel_with_wordpress) | Configure a replication user and cross-region replication |
+| [7. High availability](lesson7_ha_mds_with_ha_wordpress) | Highly available MySQL and WordPress |
+| [8. Read replicas](lesson8_mds_with_replicas) | Replica configuration for read workloads |
 
-[Lesson 2: Creating Free Tier MySQL Database Service with public access](lesson2_free_tier_mds_with_public_access)
+Lessons build on earlier concepts, but their directories are separate configurations. Use a separate state per lesson. Follow the staged variable changes in lessons 5 and 6; later steps depend on backups or target databases created earlier in the walkthrough.
 
-In this lesson, we'll delve into the creation of a **Free Tier MySQL Database Service** in Oracle Cloud Infrastructure using a **Terraform module**, where a **bastion host** is deployed in a public subnet and the **MySQL Database Service** is securely placed in a private subnet, enabling controlled public access while leveraging free tier resources.
+## Prerequisites
 
-[Lesson 3: Creating Free Tier MySQL Database Service with HeatWave Cluster](lesson3_free_tier_mds_with_heatwave_cluster)
+- Terraform / OpenTofu >= 1.11.0; CI uses OpenTofu 1.11.6.
+- OCI provider >= 9.12.1, < 10.0.0; CI uses 9.12.1.
+- An OCI tenancy, compartment, credentials, required IAM permissions and sufficient service limits.
+- Region and availability-domain values appropriate to your tenancy; two regions for cross-region examples.
+- SSH access where a lesson uses a bastion or application host.
 
-In this lesson, we'll delve into the creation of a **Free Tier MySQL Database Service** in Oracle Cloud Infrastructure with a **HeatWave Cluster** using a **Terraform module**, focusing on configuring a MySQL instance with in-memory query acceleration to significantly enhance the performance of analytical queries while utilizing free tier resources.
+Free Tier names reflect the course scenarios. Check eligibility, regional capacity and the costs of all resources before applying, including NAT gateways, compute, backups and paid database shapes.
 
-[Lesson 4: Creating Free Tier MySQL Database Service with WordPress CMS](lesson4_free_tier_mds_with_wordpress)
+## Run a Lesson
 
-In this lesson, we'll delve into the creation of a **Free Tier MySQL Database Service** in Oracle Cloud Infrastructure, combined with the deployment of **WordPress CMS** using a **Terraform module**, focusing on setting up a scalable MySQL instance to power a WordPress website while utilizing free tier resources.
+```bash
+git clone https://github.com/foggykitchen/terraform-oci-fk-heatwave.git
+cd terraform-oci-fk-heatwave/training/lesson1_free_tier_mds
+cp terraform.tfvars.example terraform.tfvars
+```
 
-[Lesson 5: Creating MySQL Database Service with manual backups and WordPress CMS](lesson5_mds_manual_backup_with_wordpress)
+Edit the local `terraform.tfvars` with your values. Keep passwords and private keys out of source control. Then:
 
-In this lesson, we'll delve into the creation of a **MySQL Database Service** in Oracle Cloud Infrastructure with manual backups using a Terraform module, along with the deployment of **WordPress CMS**. The lesson will focus on configuring a reliable backup strategy to ensure data protection and recovery for your WordPress website. First, we'll create a **local manual backup**, then securely copy this backup to a remote region for **cross-regional backup**. Finally, you'll learn how to provision a new MySQL Database Service instance from the cross-regional backup, ensuring robust disaster recovery and continuity across regions.
+```bash
+tofu init
+tofu validate
+tofu plan -out=lesson.tfplan
+# After reviewing the plan:
+tofu apply lesson.tfplan
+```
 
-[Lesson 6: Creating MySQL Database Service with Replication Channel and WordPress CMS](lesson6_mds_channel_with_wordpress) 
+The `_NEW.tf` and `_UPDATED.tf` suffixes explain changes between lessons. OpenTofu loads them as normal `.tf` files. Files ending `_DELETED.tf` are retained as course markers; do not rename or copy files from another lesson on top of the current directory.
 
-In this lesson, we'll delve into the creation of a **MySQL Database Service** in Oracle Cloud Infrastructure with a **Replication Channel** using OCI's MDS Channel feature and a Terraform module, along with deploying WordPress CMS. The focus will be on setting up a cross-regional replication channel that connects the source MySQL Database Service in the first region to the target MDS in the second region. This target MDS was originally created from a cross-regional backup in the previous lesson. By the end of this lesson, you'll learn how to replicate the database across regions, establishing a new production environment and enhancing disaster recovery and business continuity.
+The lesson READMEs retain the original screenshots, staged instructions and console transcripts. Those transcripts are historical examples, not expected output for OCI 9. Use the current `.tf` files and variable templates as the configuration source of truth. The historical Resource Manager ZIP buttons are not a validated path for the current checkout; use the CLI workflow above.
 
-[Lesson 7: Creating Highly Available MySQL Database Service with Highly Available WordPress CMS](lesson7_ha_mds_with_ha_wordpress): 
+When finished, review `tofu plan -destroy`, then use `tofu destroy` in that lesson's directory if you intend to remove its resources. This deletes the lesson's managed infrastructure and may remove its databases and backups.
 
-In this lesson, we'll delve into the creation of a **Highly Available MySQL Database Service** in Oracle Cloud Infrastructure using a **Terraform module**, along with deploying a **Highly Available WordPress CMS**, focusing on ensuring both database and application availability with redundancy across multiple availability domains for enhanced fault tolerance and resilience.
+## Validate Without Deploying
 
-[Lesson 8: Creating MySQL Database Service with Replicas](lesson8_mds_with_replicas) 
+Run from the repository root:
 
-In this lesson, we'll delve into the creation of a **MySQL Database Service** in Oracle Cloud Infrastructure with **Replicas** using a **Terraform module**, focusing on setting up read replicas to offload read-heavy workloads, improve performance, and enhance data availability and redundancy across different instances.
+```bash
+python3 scripts/oci9_check.py --root .
+for lesson in training/lesson*/; do
+  python3 scripts/oci9_check.py --root "$lesson" || exit 1
+done
+```
 
-## Copyright
-Copyright (c) 2024 [FoggyKitchen.com](https://foggykitchen.com/)
-  
+The helper works in a temporary copy with synthetic identifiers. It runs formatting, initialization, validation and plan-only mocked tests. These checks require provider and dependency downloads, but do not contact OCI APIs or execute SSH provisioners. They do not certify runtime behavior or all staged combinations of lesson flags.
+
+Lessons 4–7 compose WordPress using the existing commit-pinned dependency. That dependency still uses the retired `hashicorp/template` provider, which has no native macOS ARM package. Run those lessons on Linux AMD64, as in CI, or with a macOS AMD64 build of OpenTofu under Rosetta. The root HeatWave module does not require the template provider. Use `--modules-dir /path/to/checkouts` only when deliberately testing local dependency changes.
+
+## Support and License
+
+See the [support policy](../SUPPORT.md) for best-effort community support and commercial help, and [LICENSE](../LICENSE) for the Universal Permissive License (UPL), Version 1.0.
+
+---
+
+© 2026 [FoggyKitchen.com](https://foggykitchen.com) - Cloud. Code. Clarity.
