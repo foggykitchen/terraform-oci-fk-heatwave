@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v2.0.1 — 2026-11-17
 
 - Align module and training documentation with the FoggyKitchen repository standard; add the shared support policy and retain all eight course lessons.
 - Document module modes, networking behavior, current limitations and validation steps.
